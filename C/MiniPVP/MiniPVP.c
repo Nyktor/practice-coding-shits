@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 
 /* Constants */
@@ -23,7 +24,7 @@ typedef struct {
     char name[NAME_MAX_LENGTH];
     int hp;
     int dmg;
-    bool alive;
+    bool isAlive;
 } Player;
 
 /* Global variables */
@@ -37,12 +38,24 @@ void resetGame();
 void selectNames();
 void startTurn();
 int checkWinner();
-bool isDead(Player);
 
+
+/*---------------------------------------------------------------------------------------*/
 //Main func
 int main(){
 
-    resetGame();
+    char playAgain; 
+
+    do{
+        resetGame();
+        selectNames();
+
+        printf("\nDo you want to play again? (Y/N): ");
+        scanf("%c", &playAgain);
+        playAgain = toupper(playAgain);
+
+    }while(playAgain);
+
 
     return 0;
 }
@@ -55,16 +68,14 @@ void resetGame(){
     strncpy(player2.name, "", NAME_MAX_LENGTH);
     player1.hp = MAXHP;
     player2.hp = MAXHP;
-    player1.alive = true;
-    player2.alive = true;
+    player1.isAlive = true;
+    player2.isAlive = true;
     currentPlayerId = 0;
-    //Recalls selectNames method
-    selectNames();
 }
 
 /* Explains itself lol */
 void selectNames(){
-    printf("\nPLAYER 1: Select your name!");
+    printf("PLAYER 1: Select your name!");
     printf("\n(maximum 12 characters!)");
     printf("\nName: ");
     scanf("%s", &player1.name);
@@ -76,7 +87,7 @@ void selectNames(){
 
     printf("\n\n%s VS %s", player1.name, player2.name);
     printf("\nFIGHT!");
-}
+    while((getchar()) != '\n');
 
 /* Method that is called each turn */
 void startTurn(){
@@ -85,16 +96,11 @@ void startTurn(){
     }
 }
 
-/* Checks if the passed player is ded*/
-bool isDead(Player player){
-    return !player.alive;
-}
-
 /* Checks if there's a winner, returns its ID if is there one, returns 0 if not*/
 int checkWinner(){
-    if(isDead(player1)){
+    if(!player1.isAlive){
         return 2;
-    }else if(isDead(player2)){
+    }else if(!player2.isAlive){
         return 1;
     }
     return 0;
