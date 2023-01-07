@@ -7,27 +7,32 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-//Stacks (First In Last Out)
-void push(int[], int, int);
-void pop(int[], int);
+//Stacks methods(First In Last Out)
+void push(int[], int);
+void pop(int[]);
 
-//Queue (First In First Out)
-void enqueue(int[], int, int);
-void dequeue(int[], int);
+//Queue methods(First In First Out)
+void enqueue(int[], int);
+void dequeue(int[]);
 
-bool isEmpty(int[], int);
+//Other methods
+bool isEmpty(int[]);
+
+//Global variables & constants
+#define size 8
+int list[size];
 
 
-//Main function
+//Main function: ASSUME AN ARRAY WITH A MAX SIZE OF 8 ITEMS
 int main(){
 
-    int list[3] = {
-        1
-    };
-    int size = sizeof(list)/sizeof(list[0]);
-
     //print the whole array
-    push(list, size, 4);
+    for (int i = 1; i <= size; i++){
+        push(list, i);
+    }
+    dequeue(list);
+    pop(list);
+    push(list, 1);
     for(int i = 0; i < size; i++){
         printf("%d\n", list[i]);
     }
@@ -36,8 +41,8 @@ int main(){
 }
 
 
-//Boolean, return if the list is empty
-bool isEmpty(int list[], int size){
+//Boolean, return if the list is empty - FINISHED
+bool isEmpty(int list[]){
     if(size == 0){ 
         return true;
         }
@@ -52,24 +57,64 @@ bool isEmpty(int list[], int size){
 
 }
 
-/* STACK METHODS */
-void push(int list[], int size, int number){
-    int newArray[size+1];
-    for(int i = 0; i < size; i++){
-        newArray[i] = list[i];
+/* STACK METHODS  - FINISHED*/
+void push(int list[], int number){
+    //If the list is empty, put the first item as the selected number
+    if(isEmpty(list)){
+        list[0] = number;
+        return;
     }
-    newArray[size] = number;
-}
-
-void pop(int list[], int size){
+    //If it's not empty...
+    for(int i = size-1; i >= 0; i--){
+        //Check if it's full if the last item is not 0
+        if(i == size-1 && list[i] != 0){
+            printf("\nError: Array's full!\n");
+            return;
+        //If it's not full, check backwards until we find a number different than 0
+        }else if(list[i] != 0){
+            list[i+1] = number;
+            return;
+        }
+    }
     
 }
 
-/* QUEUE METHODS */
-void enqueue(int list[], int size, int number){
+void pop(int list[]){
+    //If the list is empty we can pop no shit
+    if(isEmpty(list)){
+            printf("\nError: Array's empty!\n");
+        return;
+    }
+    //If it's not empty...
+    for(int i = size-1; i >= 0; i--){
+        //Check item by item backwards until one is NOT zero, then make it zero
+        if(list[i] != 0){
+            list[i] = 0;
+            return;
+        }
+    }
     
 }
 
-void dequeue(int list[], int size){
-    
+
+/* QUEUE METHODS - FINISHED*/
+void enqueue(int list[], int number){
+    push(list, number); //it does the fucking same so doesn't matter
+}
+
+void dequeue(int list[]){
+    //fuck off if it's empty
+    if(isEmpty(list)){
+        return;
+    }else{
+        //if not, delete the first number
+        list[0] = 0;
+        //and swap the two consecutive numbers til the end
+        for(int i = 0; i < size-1; i++){
+            int temp;
+            temp = list[i];
+            list[i] = list[i+1];
+            list[i+1] = temp;
+        }
+    }
 }
