@@ -1,37 +1,49 @@
-#include <stdio.h>
-#include <stdbool.h>
 /*
     Author: Nyktor
     Date: 17 de Yule de 12023
     Description: practice stacks and queues
 */
 
+#include <stdio.h>
+#include <stdbool.h>
+
 //Stacks (First In Last Out)
-void push();
-void pop();
+void push(int[], int, int);
+void pop(int[], int);
 
 //Queue (First In First Out)
-void enqueue();
-void dequeue();
+void enqueue(int[], int, int);
+void dequeue(int[], int);
 
-bool isEmpty(int[]);
+bool isEmpty(int[], int);
 
 
 //Main function
 int main(){
 
-    int array[5];
-    printf("%d", isEmpty(array));
+    int list[3] = {
+        1
+    };
+    int size = sizeof(list)/sizeof(list[0]);
+
+    //print the whole array
+    push(list, size, 4);
+    for(int i = 0; i < size; i++){
+        printf("%d\n", list[i]);
+    }
 
     return 0;
 }
 
-//Boolean, return if the list is empty
-bool isEmpty(int array[]){
-    if(sizeOf(array) == 0) return true;
 
-    for(int i = 0; i < sizeOf(array)/sizeOf(array[0]); i++){
-        if(array[i] != 0){
+//Boolean, return if the list is empty
+bool isEmpty(int list[], int size){
+    if(size == 0){ 
+        return true;
+        }
+
+    for(int i = 0; i < size; i++){
+        if(list[i] != 0){
             return false;
         }
     }
@@ -41,20 +53,23 @@ bool isEmpty(int array[]){
 }
 
 /* STACK METHODS */
-void push(int array[], int number){
-    int size = sizeOf(array)/sizeOf(array[0]);
-    int newArray[0];
+void push(int list[], int size, int number){
+    int newArray[size+1];
+    for(int i = 0; i < size; i++){
+        newArray[i] = list[i];
+    }
+    newArray[size] = number;
 }
 
-void pop(){
+void pop(int list[], int size){
     
 }
 
 /* QUEUE METHODS */
-void enqueue(){
+void enqueue(int list[], int size, int number){
     
 }
 
-void dequeue(){
+void dequeue(int list[], int size){
     
 }
