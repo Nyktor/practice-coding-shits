@@ -28,7 +28,7 @@ typedef struct {
 } Player;
 
 /* Global variables */
-int turn;
+int round;
 int currentPlayerId;
 Player player1;
 Player player2;
@@ -36,6 +36,7 @@ Player player2;
 /* Function prototypes */
 void resetGame();
 void selectNames();
+void printHP();
 void startTurn();
 int checkWinner();
 
@@ -44,25 +45,32 @@ int checkWinner();
 //Main func
 int main(){
 
-    char playAgain; 
+    char playAgain = 'N'; 
 
     do{
         resetGame();
         selectNames();
 
+        while(checkWinner() == 0){
+            printHP();
+            startTurn();
+
+        }
+
         printf("\nDo you want to play again? (Y/N): ");
         scanf("%c", &playAgain);
         playAgain = toupper(playAgain);
 
-    }while(playAgain);
+    }while(playAgain == 'Y');
 
+        printf("\nThank you for playing <3\n");
 
     return 0;
 }
 
 /* Reset all parameters of the game */
 void resetGame(){
-    turn = 0;
+    round = 0;
     //Resets players' stats
     strncpy(player1.name, "", NAME_MAX_LENGTH);
     strncpy(player2.name, "", NAME_MAX_LENGTH);
@@ -88,11 +96,36 @@ void selectNames(){
     printf("\n\n%s VS %s", player1.name, player2.name);
     printf("\nFIGHT!");
     while((getchar()) != '\n');
+}
+
+/* Method used to print both players' HP*/
+void printHP(){
+    //Player 1
+    printf("\n%s [", player1.name);
+    for(int i = 0; i < player1.hp / 5; i++){
+        printf("||||| ");
+    }
+    for(int i = 0; i < player1.hp % 5; i++){
+        printf("|");
+    }
+    printf("]");
+    //Player 2
+    printf("\n%s [", player2.name);
+    for(int i = 0; i < player2.hp / 5; i++){
+        printf("||||| ");
+    }
+    for(int i = 0; i < player2.hp % 5; i++){
+        printf("|");
+    }
+    printf("]");
+}
 
 /* Method that is called each turn */
 void startTurn(){
     if(currentPlayerId == 0){
-
+        //IE: game at the start, chooses a random player
+        srand(time(0));
+        currentPlayerId = rand() % 2 + 1;
     }
 }
 
