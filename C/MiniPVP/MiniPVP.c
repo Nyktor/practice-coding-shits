@@ -130,7 +130,9 @@ void startTurn(){
         currentPlayerId = rand() % 2 + 1;
     }
     printf("\n\nYour turn, %s!", getPlayer(currentPlayerId).name);
-    printf("\nWhat do you want to do? \nAttack: \"A\"\nChoose: ");
+    printf("\nWhat do you want to do?");
+    printf(" \nAttack: \"A\"");
+    printf("\nChoose: ");
     scanf("%c", &action);
     scanf("%c");
     action = toupper(action);
