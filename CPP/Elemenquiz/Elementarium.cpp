@@ -23,19 +23,18 @@ Aether::Aether(Element e1, Element e2){
     affinity2 = e2;
 };
 
-//Five aethers:
-Aether Flowing(HYDROS, VITAS);
-Aether Unbreakable(TERRA, METALLUM);
-Aether Howling(VENTUS, GLAKIES);
-Aether Polar(LUX, NYX);
-
 //Elementarium constructor
-Elementarium::Elementarium(string iName, Element iElement, Aether iAffinity){
+Elementarium::Elementarium(string iName, Affinities iAff){
     name = iName;
-    eAffinity = iElement;
-    aAffinity = iAffinity;
+    aff = iAff;
 };
+
 //Elementarium set name
 void Elementarium::setName(string iName){
     name = iName;
 };
+
+//Elementarium get elemental affinity
+Element Elementarium::getElemAffinity(){
+    
+}

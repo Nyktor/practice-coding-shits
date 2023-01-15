@@ -10,7 +10,7 @@
 
 /*User defined datatypes*/
 enum Element{IGNIS, ELEKTRO, HYDROS, VITAS, TERRA, METALLUM, VENTUS, GLAKIES, LUX, NYX};
-//enum Aether{STRIKING, FLOWING, UNBREAKABLE, HOWLING, POLAR};
+typedef unsigned short score;
 
 /*Y'know, I be using things*/
 using std::string;
@@ -27,21 +27,43 @@ class Aether{
 		unsigned short getConcentration(){return concentration;}
 };
 
-class Affinities{
-	private:
+/* Five Aether objects*/
+Aether Striking(IGNIS, ELEKTRO);
+Aether Flowing(HYDROS, VITAS);
+Aether Unbreakable(TERRA, METALLUM);
+Aether Howling(VENTUS, GLAKIES);
+Aether Polar(LUX, NYX);
 
+class Affinities{
+	public:
+		score Ignis, Elektro, Hydros, Vitas, Terra, 
+			  Metallum, Ventus, Glakies, Lux, Nyx;
+		score AllElements[10]={Ignis, Elektro, Hydros,
+							   Vitas, Terra, Metallum,
+							   Ventus, Glakies, Lux, Nyx};
+	private:
+		score striking = Ignis + Elektro, 
+			  flowing = Hydros + Vitas,
+			  unbreakable = Terra + Metallum,
+			  howling = Ventus + Glakies,
+			  polar = Lux + Nyx;
+	public:
+		score getStrikingAffinity(){return striking;}
+		score getFlowingAffinity(){return flowing;}
+		score getUnbreakableAffinity(){return unbreakable;}
+		score getHowlingAffinity(){return howling;}
+		score getPolarAffinity(){return polar;}
 };
 
 class Elementarium{
 	private:
 		string name;
-		int scores[10];
-		Element eAffinity;
-		Aether aAffinity;
+		Affinities aff;
 	public:
+		//Constructor
+		Elementarium(string, Affinities aff);
 		void setName(string);
 		string getName(){return name;}
-		Element getEAffinity(){return eAffinity;}
-		Aether getAAffinity(){return aAffinity;}
-		Elementarium(string, Element, Aether);
+		Element getElemAffinity();
+		Aether getAethAffinity();
 };
