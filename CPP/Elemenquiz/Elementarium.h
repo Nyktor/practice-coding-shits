@@ -34,27 +34,32 @@ Aether Unbreakable(TERRA, METALLUM);
 Aether Howling(VENTUS, GLAKIES);
 Aether Polar(LUX, NYX);
 
+/* Class for ALL affinities, elemental AND aetherical*/
 class Affinities{
 	public:
 		score Ignis, Elektro, Hydros, Vitas, Terra, 
 			  Metallum, Ventus, Glakies, Lux, Nyx;
-		score AllElements[10]={Ignis, Elektro, Hydros,
-							   Vitas, Terra, Metallum,
-							   Ventus, Glakies, Lux, Nyx};
 	private:
 		score striking = Ignis + Elektro, 
 			  flowing = Hydros + Vitas,
 			  unbreakable = Terra + Metallum,
 			  howling = Ventus + Glakies,
 			  polar = Lux + Nyx;
+
+		score AllElements[10]={Ignis, Elektro, Hydros,
+							   Vitas, Terra, Metallum,
+							   Ventus, Glakies, Lux, Nyx};
 	public:
 		score getStrikingAffinity(){return striking;}
 		score getFlowingAffinity(){return flowing;}
 		score getUnbreakableAffinity(){return unbreakable;}
 		score getHowlingAffinity(){return howling;}
 		score getPolarAffinity(){return polar;}
+		score* getAllElements(); //ptr to an array with all elemental affinities
+		score* getAllAethers(); //ptr to an array with all aether affinities
 };
 
+/* Class for an Elementarium*/
 class Elementarium{
 	private:
 		string name;
@@ -62,8 +67,9 @@ class Elementarium{
 	public:
 		//Constructor
 		Elementarium(string, Affinities aff);
+
 		void setName(string);
 		string getName(){return name;}
-		Element getElemAffinity();
-		Aether getAethAffinity();
+		Element getElementalAffinity();
+		Aether getAethericalAffinity();
 };
