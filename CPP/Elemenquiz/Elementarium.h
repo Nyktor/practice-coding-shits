@@ -9,30 +9,36 @@
 #include <string>
 
 /*User defined datatypes*/
-enum Element{IGNIS, ELEKTRO, HYDROS, VITAS, TERRA, METALLUM, VENTUS, GLAKIES, LUX, NYX};
+enum eElement{IGNIS, ELEKTRO, HYDROS, VITAS, TERRA, METALLUM, VENTUS, GLAKIES, LUX, NYX};
+enum eAether{STRIKING, FLOWING, UNBREAKABLE, HOWLING, POLAR};
+
 typedef unsigned short score;
+typedef unsigned short ID;
 
 /*Y'know, I be using things*/
 using std::string;
 
+/* Useful functions */
+string aetherNames[5] = {"STRIKING", "FLOWING", "UNBREAKABLE", "HOWLING", "POLAR"};
+string elementNames[10] = { "IGNIS", "ELEKTRO", "HYDROS", "VITAS", "TERRA", "METALLUM", "VENTUS", "GLAKIES", "LUX", "NYX"};
+
+string getElementStringByID(ID id){return elementNames[id];}
+string getAetherStringByID(ID id){return aetherNames[id];}
+
 /*Classes interfaces*/
 class Aether{
 	private:
-		Element affinity1;
-		Element affinity2;
+		eAether e;
+		eElement affinity1;
+		eElement affinity2;
 		unsigned short concentration;
 	public:
 		Aether();
-		Aether(Element, Element);
+		Aether(eElement, eElement, eAether);
+		string getName(){return getAetherStringByID(e);}
 		unsigned short getConcentration(){return concentration;}
 };
 
-/* Five Aether objects*/
-Aether Striking(IGNIS, ELEKTRO);
-Aether Flowing(HYDROS, VITAS);
-Aether Unbreakable(TERRA, METALLUM);
-Aether Howling(VENTUS, GLAKIES);
-Aether Polar(LUX, NYX);
 
 /* Class for ALL affinities, elemental AND aetherical*/
 class Affinities{
@@ -65,11 +71,11 @@ class Elementarium{
 		string name;
 		Affinities aff;
 	public:
-		//Constructor
 		Elementarium(string, Affinities aff);
 
 		void setName(string);
 		string getName(){return name;}
-		Element getElementalAffinity();
+		eElement getElementalAffinity();
 		Aether getAethericalAffinity();
 };
+

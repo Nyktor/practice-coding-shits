@@ -18,10 +18,18 @@ Aether::Aether(){
     affinity1 = IGNIS;
     affinity2 = IGNIS;
 }
-Aether::Aether(Element e1, Element e2){
+Aether::Aether(eElement e1, eElement e2, eAether ae){
     affinity1 = e1;
     affinity2 = e2;
+    e = ae;
 };
+
+/* Five Aether objects*/
+Aether Striking(IGNIS, ELEKTRO, STRIKING);
+Aether Flowing(HYDROS, VITAS, FLOWING);
+Aether Unbreakable(TERRA, METALLUM, UNBREAKABLE);
+Aether Howling(VENTUS, GLAKIES, HOWLING);
+Aether Polar(LUX, NYX, POLAR);
 
 //Elementarium constructor
 Elementarium::Elementarium(string iName, Affinities iAff){
@@ -35,14 +43,14 @@ void Elementarium::setName(string iName){
 };
 
 //Elementarium get elemental affinity
-Element Elementarium::getElementalAffinity(){
-    Element e;
+eElement Elementarium::getElementalAffinity(){
+    eElement e;
     score highest = 0;
     score* pAllElements = aff.getAllElements();
     for(int i = 0; i < 10; i++){
         if(pAllElements[i] > highest){
             highest = pAllElements[i];
-            e = Element(i);
+            e = eElement(i);
         }
     }
     return e;
@@ -90,7 +98,7 @@ score* Affinities::getAllAethers(){
     return allAethers;
 }
 
-//Elementarium get all elemental affinities in array
+//Pointer to an array with all elemental scores
 score* Affinities::getAllElements(){
     static score allElements[10];
     
