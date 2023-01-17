@@ -76,7 +76,7 @@ void readFile(){
             getline(elemenfile, name, ',');
             cout << "\nElementarium: " << name << endl;
             getline(elemenfile, element, ',');
-            cout << "   Elemental affinity: " << element << endl;
+            cout << "   Elemental affinity:  " << element << endl;
             getline(elemenfile, aether, ',');
             cout << "   Aetherical affinity: " << aether << endl;
             getline(elemenfile, values);
@@ -90,40 +90,40 @@ void readFile(){
 }
 
 void addElementarium(){
-    string newElementarium = "\n";
-    string name;
-    ID affinity;
+    string line = "\n", scoresString = "", name;
+    score scores[10], affinity;
+
+    //Open da fileee
     elemenfile.open("Elementariums.csv", std::ios::app);
     if(!elemenfile){
         cout << "There's something wrong with da file" << endl;
         return;
     }
 
-    cout << "ADDING A NEW ELEMENTARIUM:" << endl;
+    cout << "* ADDING A NEW ELEMENTARIUM *" << endl;
 
+    //Get name and put it first
     cout << "What's their name?: ";
     cin >> name;
-    newElementarium.append(name).append(",");
+    line.append(name).append(",");
 
-    /* Both the elemental and the aetherical affinities will be manually introduced, for now*/
-    cout << "\nWhat's their elemental affinity?: " << endl;
+    //Store the scores in the array
+    cout << "\nWhat are their elemental scores?: " << endl;
     for(int i = 0; i < 10; i++){
-        cout << i+1 << ". " << getElementStringByID(i) << endl;
+        cout << getElementStringByID(i) << ": ";
+        cin >> affinity;
+        scores[i] = affinity;
+        scoresString.append(std::to_string(affinity).append(","));
     }
-    cout << "Element: ";
-    cin >> affinity;
-    newElementarium.append(getElementStringByID(affinity-1)).append(",");
 
+    //Creates the new Elementarium object
+    Affinities aff(scores);
+    Elementarium ele(name, aff);
+    eElement element = aff.getKinElement();
+    eAether aether = aff.getKinAether().getEnum();
 
-    cout << "\nWhat's their aetherical affinity?: " << endl;
-    for(int i = 0; i < 5; i++){
-        cout << i+1 << " " << getAetherStringByID(i) << endl;
-    }
-    cout << "Aether: ";
-    cin >> affinity;
-    newElementarium.append(getAetherStringByID(affinity-1)).append(",");
-
-    elemenfile << newElementarium;
-    cout << "\nELEMENTARIUM SUCCESFULLY ADDED!";
-    elemenfile.close();
+    line.append(getElementStringByID(element).append(","));
+    line.append(getAetherStringByID(aether)).append(",");
+    line.append(scoresString);
+    cout << "\n* NEW ELEMENTARIUM SUCCESFULLY ADDED! *" << endl;
 }
