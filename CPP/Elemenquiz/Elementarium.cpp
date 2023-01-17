@@ -15,8 +15,9 @@ using std::string;
 
 //Aether constructors
 Aether::Aether(){
-    affinity1 = IGNIS;
-    affinity2 = IGNIS;
+    affinity1 = elemNULL;
+    affinity2 = elemNULL;
+    e = aethNULL;
 }
 Aether::Aether(eElement e1, eElement e2, eAether ae){
     affinity1 = e1;
@@ -31,6 +32,18 @@ Aether Unbreakable(TERRA, METALLUM, UNBREAKABLE);
 Aether Howling(VENTUS, GLAKIES, HOWLING);
 Aether Polar(LUX, NYX, POLAR);
 
+//Affinities constructor
+Affinities::Affinities(){
+    for(int i = 0; i < 10; i++){
+        AllElements[i] = 0;
+    }
+}
+Affinities::Affinities(score scores[10]){
+    for(int i = 0; i < 10; i++){
+        AllElements[i] = scores[i];
+    }
+}
+
 //Elementarium constructor
 Elementarium::Elementarium(string iName, Affinities iAff){
     name = iName;
@@ -42,7 +55,7 @@ void Elementarium::setName(string iName){
     name = iName;
 };
 
-//Elementarium get elemental affinity
+//Returns the highest elemental affinity
 eElement Elementarium::getElementalAffinity(){
     eElement e;
     score highest = 0;
@@ -56,7 +69,7 @@ eElement Elementarium::getElementalAffinity(){
     return e;
 }
 
-//Returns the highest aetherical affinity
+//Returns the highest aetherical affinity (Aether class)
 Aether Elementarium::getAethericalAffinity(){
     Aether ae;
     score highest = 0;
@@ -85,7 +98,7 @@ Aether Elementarium::getAethericalAffinity(){
     }
 }
 
-//Elementarium get all aetherical affinities in array
+//Pointer to an array with all aetherical scores
 score* Affinities::getAllAethers(){
     static score allAethers[5];
     

@@ -9,8 +9,8 @@
 #include <string>
 
 /*User defined datatypes*/
-enum eElement{IGNIS, ELEKTRO, HYDROS, VITAS, TERRA, METALLUM, VENTUS, GLAKIES, LUX, NYX};
-enum eAether{STRIKING, FLOWING, UNBREAKABLE, HOWLING, POLAR};
+enum eElement{IGNIS, ELEKTRO, HYDROS, VITAS, TERRA, METALLUM, VENTUS, GLAKIES, LUX, NYX, elemNULL};
+enum eAether{STRIKING, FLOWING, UNBREAKABLE, HOWLING, POLAR, aethNULL};
 
 typedef unsigned short score;
 typedef unsigned short ID;
@@ -35,6 +35,7 @@ class Aether{
 	public:
 		Aether();
 		Aether(eElement, eElement, eAether);
+
 		string getName(){return getAetherStringByID(e);}
 		unsigned short getConcentration(){return concentration;}
 };
@@ -56,6 +57,9 @@ class Affinities{
 							   Vitas, Terra, Metallum,
 							   Ventus, Glakies, Lux, Nyx};
 	public:
+		Affinities();
+		Affinities(score[10]);
+
 		score getStrikingAffinity(){return striking;}
 		score getFlowingAffinity(){return flowing;}
 		score getUnbreakableAffinity(){return unbreakable;}
