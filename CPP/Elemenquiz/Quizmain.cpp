@@ -9,15 +9,14 @@
 #include <string>
 #include "Elementarium.h"
 
-/* Using SPECIFIC std libraries, it is bad practice to use the whole std*/
+/* Using SPECIFIC std libraries, it is bad practice to use the whole std */
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
-using std::fstream;
 
 /* Global variables */
-fstream elemenfile;
+std::fstream elemenfile;
 
 /* Function prototypes*/
 void readFile();
@@ -117,13 +116,15 @@ void addElementarium(){
     }
 
     //Creates the new Elementarium object
-    Affinities aff(scores);
-    Elementarium ele(name, aff);
-    eElement element = aff.getKinElement();
-    eAether aether = aff.getKinAether().getEnum();
+    Elementarium ele(name, scores);
+    eElement element = ele.getAffinities().getKinElement();
+    eAether aether = ele.getAffinities().getKinAether().getEnum();
 
     line.append(getElementStringByID(element).append(","));
     line.append(getAetherStringByID(aether)).append(",");
     line.append(scoresString);
     cout << "\n* NEW ELEMENTARIUM SUCCESFULLY ADDED! *" << endl;
+
+    elemenfile << line;
+    elemenfile.close();
 }

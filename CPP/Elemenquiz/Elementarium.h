@@ -54,19 +54,12 @@ Aether Polar(LUX, NYX, POLAR);
 
 /* Class for ALL affinities, elemental AND aetherical*/
 class Affinities{
-	public:
+	private:
 		score Ignis, Elektro, Hydros, Vitas, Terra, 
 			  Metallum, Ventus, Glakies, Lux, Nyx;
-	private:
-		score striking = Ignis + Elektro, 
-			  flowing = Hydros + Vitas,
-			  unbreakable = Terra + Metallum,
-			  howling = Ventus + Glakies,
-			  polar = Lux + Nyx;
 
-		score AllElements[10]={Ignis, Elektro, Hydros,
-							   Vitas, Terra, Metallum,
-							   Ventus, Glakies, Lux, Nyx};
+		score AllElements[10];
+		score AllAethers[5];
 	public:
 		Affinities(){
 			for(int i = 0; i < 10; i++){
@@ -84,37 +77,45 @@ class Affinities{
 			Glakies = scores[7];
 			Lux = scores[8];
 			Nyx = scores[9];
+
+			for(int i = 0; i < 10; i++){
+				AllElements[i] = scores[i];
+			}
+
+			AllAethers[0] = Ignis + Elektro;
+			AllAethers[1] = Hydros + Vitas;
+			AllAethers[2] = Terra + Metallum;
+			AllAethers[3] = Ventus + Glakies;
+			AllAethers[4] = Lux + Nyx;
 		}
 
 		score getElementalAffinity(int element){return AllElements[element];}
 
-		score getStrikingAffinity(){return striking;}
-		score getFlowingAffinity(){return flowing;}
-		score getUnbreakableAffinity(){return unbreakable;}
-		score getHowlingAffinity(){return howling;}
-		score getPolarAffinity(){return polar;}
+		score getStrikingAffinity(){return AllAethers[0];}
+		score getFlowingAffinity(){return AllAethers[1];}
+		score getUnbreakableAffinity(){return AllAethers[2];}
+		score getHowlingAffinity(){return AllAethers[3];}
+		score getPolarAffinity(){return AllAethers[4];}
 
 		eElement getKinElement(){
-			eElement e;
+			eElement ele = elemNULL;
 			score highest = 0;
-			score* pAllElements = getAllElementScores();
 			for(int i = 0; i < 10; i++){
-				if(pAllElements[i] > highest){
-					highest = pAllElements[i];
-					e = eElement(i);
+				if(AllElements[i] > highest){
+					highest = AllElements[i];
+					ele = eElement(i);
 				}
 			}
-			return e;
+			return ele;
 		}
 		
 		Aether getKinAether(){
 			Aether ae;
 			score highest = 0;
-			score* pAllAethers = getAllAetherScores();
 			int highestId = -1;
 			for(int i = 0; i < 5; i++){
-				if(pAllAethers[i] > highest){
-					highest = pAllAethers[i];
+				if(AllAethers[i] > highest){
+					highest = AllAethers[i];
 					highestId = i;
 				}
 			}
@@ -134,34 +135,8 @@ class Affinities{
 					return ae;            
 			}
 		}
-		score* getAllElementScores(){
-			static score allElements[10];
-			
-				allElements[0] = Ignis;
-				allElements[1] = Elektro;
-				allElements[2] = Hydros;
-				allElements[3] = Vitas;
-				allElements[4] = Terra;
-				allElements[5] = Metallum;
-				allElements[6] = Ventus;
-				allElements[7] = Glakies;
-				allElements[8] = Lux;
-				allElements[9] = Nyx;
-			
-			return allElements;
-		}
-		
-		score* getAllAetherScores(){
-			static score allAethers[5];
-			
-				allAethers[0] = getStrikingAffinity();
-				allAethers[1] = getFlowingAffinity();
-				allAethers[2] = getUnbreakableAffinity();
-				allAethers[3] = getHowlingAffinity();
-				allAethers[4] = getPolarAffinity();
-			
-			return allAethers;
-		}
+		score* getAllElementScores(){return AllElements;}
+		score* getAllAetherScores(){return AllAethers;}
 };
 
 /* Class for an Elementarium*/
@@ -179,7 +154,7 @@ class Elementarium{
 			name = iName;
 			aff = iAff;
 		};
-		Elementarium(string iName, score* scores){
+		Elementarium(string iName, score scores[10]){
 			Affinities iAff(scores);
 			name = iName;
 			aff = iAff;
@@ -189,10 +164,10 @@ class Elementarium{
 		Affinities getAffinities(){return aff;}
 };
 
+/* Useful functions */
 string aetherNames[5] = {"STRIKING", "FLOWING", "UNBREAKABLE", "HOWLING", "POLAR"};
 string elementNames[10] = {"IGNIS", "ELEKTRO", "HYDROS", "VITAS", "TERRA", "METALLUM", "VENTUS", "GLAKIES", "LUX", "NYX"};
 
-/* Useful functions */
 string getElementStringByID(int id){
     return elementNames[id];
 }
